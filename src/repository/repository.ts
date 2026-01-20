@@ -1,4 +1,5 @@
 import {Pool} from "pg";
+import Data from "src/model/models";
 
 export const pool = new Pool({
     host: "localhost",
