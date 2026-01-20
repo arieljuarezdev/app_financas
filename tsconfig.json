@@ -42,5 +42,9 @@
     "skipLibCheck": true,
 
     "moduleResolution": "nodenext",
-  }
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "ts-node": {"transpileOnly": true}
 }

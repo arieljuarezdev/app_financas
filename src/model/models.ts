@@ -1,5 +1,5 @@
 export default class Data {
-    // id: number;
+    id: number | undefined;
     name : string;
     date: string;
     value: number;
