@@ -1,16 +1,36 @@
-import { pool } from "./repository/repository";
+import { pool } from "./repository/database";
 import express, { Request, Response, NextFunction } from "express";
 import cors from 'cors'
 import morgan from "morgan";
 import helmet from "helmet";
+import { Pool } from "pg";
 
-async function main(){
-    const result = await pool.query('SELECT NOW()');
-    console.log("Postgres conectado: ", result.rows[0])
-    await pool.end()
+declare global {
+    var connection: Pool | undefined;
 }
 
-main().catch(console.error)
+async function connect(){
+
+    // aplicação de Singleton (design pattern)
+    if(global.connection){
+        return global.connection.connect();
+    }
+
+    const client = await pool.connect();
+    console.log("conectou com postgresql")
+
+    const res = await client.query('SELECT NOW()');
+    console.log(res.rows[0])
+    client.release()
+
+    global.connection = pool;
+
+
+    return pool.connect()
+
+}
+
+connect()
 
 
 
