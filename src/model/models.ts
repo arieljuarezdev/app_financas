@@ -1,4 +1,3 @@
-import { Pool } from "pg";
 export default class Data {
     id: number | undefined;
     name : string;
@@ -11,10 +10,3 @@ export default class Data {
         this.value = value;
     }
 }
-
-
-declare global {
-    var connection: Pool | undefined;
-}
-
-export{}

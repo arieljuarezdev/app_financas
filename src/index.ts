@@ -1,38 +1,10 @@
-import { pool } from "./repository/database";
 import express, { Request, Response, NextFunction } from "express";
 import cors from 'cors'
 import morgan from "morgan";
 import helmet from "helmet";
-import { Pool } from "pg";
 
-declare global {
-    var connection: Pool | undefined;
-}
-
-async function connect(){
-
-    // aplicação de Singleton (design pattern)
-    if(global.connection){
-        return global.connection.connect();
-    }
-
-    const client = await pool.connect();
-    console.log("conectou com postgresql")
-
-    const res = await client.query('SELECT NOW()');
-    console.log(res.rows[0])
-    client.release()
-
-    global.connection = pool;
-
-
-    return pool.connect()
-
-}
-
-connect()
-
-
+require("dotenv").config();
+const db = require("./repository/database")
 
 const app = express();
 
@@ -49,4 +21,20 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
     res.status(500).send(err.message)
 })
 
-export default app;
+app.post('/payable', async(req, res)=>{
+    
+    try{
+        console.log("rota fio chamada")
+    console.log("body: ",req.body)
+
+    await db.addPayable(req.body);
+    res.sendStatus(201)
+    }catch{
+        console.error("Erro ao salvar no banco:");
+    res.status(500).json({ error: "Erro ao salvar no banco" });
+    }
+    
+})
+
+export default app
+
