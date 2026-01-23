@@ -7,14 +7,22 @@ import connect from "./database";
 // update - PATCH - U
 // delete - DELETE - D
 
-const conn = global.connection
+// async function addPayable(payable:Data) {
 
-async function addPayable(payable:Data) {
-    const client = await connect()
-    const query = 'INSERT INTO data_ctrtl(nameP, date, valueP) VALUES ($1, $2, $3 )';
-    const values = [payable.name, payable.date, payable.value]
+//     console.log("payable: ", payable)
 
-    return await client.query(query, values)
-}
+//     const client = await connect()
+//     const query = 'INSERT INTO data_ctrl(namep, date, valuep) VALUES ($1, $2, $3 )';
+//     const values = [payable.name, payable.date, payable.value]
 
-module.exports = {addPayable}
+//     return await client.query(query, values)
+// }
+
+// async function getAllPayable() {
+//     const client = await connect();
+//     const res = await client.query('SELECT * FROM data_ctrl')
+
+//     return res.rows
+// }
+
+// module.exports = {addPayable, getAllPayable}
