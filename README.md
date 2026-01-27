@@ -23,8 +23,6 @@ A ideia central é transformar dados financeiros em **informações úteis para 
 
 ## 🛠️ Tecnologias Utilizadas
 
-> *(Adapte conforme o seu projeto)*
-
 - Backend: Node.js / Express  
 - Frontend: Angular / React / HTML + CSS + JS  
 - Banco de dados: PostgreSQL   
