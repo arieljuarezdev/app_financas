@@ -34,7 +34,7 @@ async function connect(){
 
 connect()
 
-async function addPayable(payable:Data) {
+async function addPayable(payable:Data): Promise <boolean>{
 
     // Validar preenchimento dos dados
 
@@ -49,8 +49,14 @@ async function addPayable(payable:Data) {
         payable.value
     ]
     
+    const result = await client.query(query,values)
 
-    return await client.query(query,values)
+    if(!result){
+        return false
+    }
+
+    return true
+
 }
 
 async function getAllPayable() {
@@ -87,9 +93,15 @@ async function updatePayable(id: number, pay: Data){
 
 }
 
-async function deletePayable(id:number) {
+async function deletePayable(id:number): Promise <boolean>{
     const client = await connect();
-    return await client.query('DELETE FROM data_ctrl WHERE ID = $1', [id])
+    const result =  await client.query('DELETE FROM data_ctrl WHERE ID = $1', [id])
+
+    if (result.rowCount == 0 || null) {
+            return false
+        }
+
+    return true
 }
 
 module.exports = {addPayable, getAllPayable, getPayableById, updatePayable, deletePayable}
